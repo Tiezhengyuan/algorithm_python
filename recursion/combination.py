@@ -34,3 +34,8 @@ def stair_3steps(n:int, path:list, output:list):
      return stair_3steps(n-1, deepcopy(path), output) + \
           stair_3steps(n-2, deepcopy(path), output) + \
           stair_3steps(n-3, deepcopy(path), output)
+
+def anagram_char(input:str, output:list):
+     '''
+     all anagrams of a given string
+     '''

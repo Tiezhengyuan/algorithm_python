@@ -43,3 +43,12 @@ class TestDNA(TestCase):
     def test_get_sum(self, low, high,expect):
         res = get_sum(low, high)
         assert res == expect
+
+    @data(
+        [1, 1],
+        [7, 28],
+    )
+    @unpack
+    def test_triangle_numbers(self, input, expect):
+        res = triangle_numbers(input)
+        assert res == expect

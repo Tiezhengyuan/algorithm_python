@@ -27,3 +27,12 @@ def get_sum(low:int, high:int):
     if low == high:
         return low
     return low + get_sum(low + 1, high)
+
+def triangle_numbers(n:int):
+    '''
+    sequence: 1,3,6,10,15,21
+    f(n) = n + f(n-1)
+    '''
+    if n <= 0:
+        return 0
+    return triangle_numbers(n-1) + n

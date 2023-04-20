@@ -23,3 +23,4 @@ def count_nt(dnaseq:str, nt:str):
         return 0
     count = 1 if dnaseq[0] == nt else 0
     return count + count_nt(dnaseq[1:], nt)
+

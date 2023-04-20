@@ -22,3 +22,23 @@ class TestArray(TestCase):
     def test_double_array(self,input,expect):
         double_array(input)
         assert input == expect
+
+    @data(
+        [['ab', 'c', 'def', 'ghij'], 10],
+        [[], 0],
+        [[''], 0],
+    )
+    @unpack
+    def test_count_char(self,input,expect):
+        res = count_char(input)
+        assert res == expect
+
+
+    @data(
+        [[1,20,2,5,13], [20,2]],
+        [[41,5], []],
+    )
+    @unpack
+    def test_filter_even(self,input,expect):
+        res = filter_even(input)
+        assert res == expect
