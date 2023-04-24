@@ -25,7 +25,7 @@ class TestIterateList(TestCase):
     )
     @unpack
     def test_get_intersection(self, arr1, arr2, expect):
-        res = c.get_intersection(arr1,arr2)
+        res = c.get_intersection_1(arr1,arr2)
         assert res == expect
 
     @data(
