@@ -37,3 +37,18 @@ class TestBinarySearch(TestCase):
     def test_recursion(self, input,target, expect):
         res = c.recursion_search(input,target)
         assert res == expect
+    
+    @data(
+        [
+            [4,10,11,25,30,33,40,50,52,56,61,75,82,89,95],
+            [50,25,75,10,33,56,89,4,11,30,40,52,61,82,95],
+        ],
+        [[],[]],
+        [[5],[5]],
+        [[1,5],[1,5]],
+        [[1,2,5],[2,1,5]],
+    )
+    @unpack
+    def test_binary_iter(self, input, expect):
+        res = c.binary_iter(input)
+        assert res == expect

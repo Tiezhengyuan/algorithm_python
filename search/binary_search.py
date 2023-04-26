@@ -45,3 +45,30 @@ class BinarySearch:
                 search_val, lower_bound, upper_bound)
         return -1
             
+    @staticmethod
+    def binary_iter(input:list):
+        '''
+        Breadth first search: export midpoint
+        input should be sorted
+        '''
+        if not input:
+            return []
+        nodes = []
+        pool = [(0, len(input)-1)]
+        while pool:
+            start, end = pool.pop(0)
+            if end <= start:
+                # print('start:', input[start])
+                nodes.append(input[start])
+            elif start >= end:
+                # print('end:', input[end])
+                nodes.append(input[end])
+            else:
+                midpoint = round((start+end)/2)
+                # print('midpoint:', start, end, midpoint, input[midpoint])
+                nodes.append(input[midpoint])
+                if midpoint > 0:
+                    pool.append((start, midpoint-1))
+                if midpoint < len(input)-1:
+                    pool.append((midpoint+1, end))
+        return nodes
