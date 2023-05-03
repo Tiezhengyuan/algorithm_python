@@ -157,47 +157,45 @@ class WeightedGraph:
 
 
 
-    def shortest_distance_dfs(self, start:str, \
-            end:str, evaluate:str=None)->list:
+    def best_path(self, start:str, end:str, \
+            algorithm:str, evaluate:str=None)->list:
         '''
-        depth first sarch
+        best_path is determined by evalute approach.
+        that could be the shortest distance or cheapest cost, etc
+        
+        args: algorithm = dfs (depth first search) or
+            bfs (breadth first search)
         '''
-        shortest_path, shortest_dist = [], None
         start_vertex = self.get_node(start)
         end_vertex = self.get_node(end)
-        if start_vertex and end_vertex:
+        if not start_vertex:
+            return [], None
+        if not end_vertex:
+            return [], None
+
+        # determin all possible paths
+        iters = []
+        if algorithm == 'dfs':
             path = [start_vertex,]
             edges = []
             iters = self.depth_first_traverse(
                 path, edges, end_vertex
             )
-            for path, edges in iters:
-                dist = self.calculate_distance(edges, evaluate)
-                if shortest_dist is None or dist < shortest_dist:
-                    shortest_dist = dist
-                    shortest_path = path
-            shortest_path = [v.val for v in shortest_path]
-            return shortest_path, shortest_dist
-
-    def shortest_distance_bfs(self, start:str, \
-            end:str, evaluate:str=None)->list:
-        '''
-        breadth first sarch
-        '''
-        shortest_path, shortest_dist = [], None
-        start_vertex = self.get_node(start)
-        end_vertex = self.get_node(end)
-        if start_vertex and end_vertex:
+        elif algorithm == 'bfs':
             iters = self.breadth_first_traverse(
                 start_vertex, end_vertex
             )
-            for path, edges in iters:
-                dist = self.calculate_distance(edges, evaluate)
-                if shortest_dist is None or dist < shortest_dist:
-                    shortest_dist = dist
-                    shortest_path = path
-            shortest_path = [v.val for v in shortest_path]
-            return shortest_path, shortest_dist
+        
+        # determine shortest distance
+        shortest_path, shortest_dist = [], None
+        for path, edges in iters:
+            dist = self.calculate_distance(edges, evaluate)
+            if shortest_dist is None or dist < shortest_dist:
+                shortest_dist = dist
+                shortest_path = path
+        shortest_path = [v.val for v in shortest_path]
+        return shortest_path, shortest_dist
+
 
 
 

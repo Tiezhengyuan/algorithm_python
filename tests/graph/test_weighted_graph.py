@@ -127,31 +127,31 @@ class TestWeightedGraph(TestCase):
         ['gina', 'derek', ['gina', 'derek'], 1],
     )
     @unpack
-    def test_shortest_distiance(self, val1, val2, expect, expect_dist):
+    def test_shortest_distance(self, val1, val2, expect, expect_dist):
         g = WeightedGraph()
         g.feed(INPUT_1)
         # DFS
-        path, dist = g.shortest_distance_dfs(val1, val2, None)
+        path, dist = g.best_path(val1, val2, 'dfs', None)
         assert path == expect
         assert dist == expect_dist
         # BFS
-        path, dist = g.shortest_distance_bfs(val1, val2, None)
+        path, dist = g.best_path(val1, val2, 'bfs', None)
         assert path == expect
         assert dist == expect_dist
     
     @data(
-        ['Atlanta', 'Chicago', ['Atlanta', 'Denver', 'Chicago'], 200]
+        ['Atlanta', 'Chicago', ['Atlanta', 'Denver', 'Chicago'], 200],
     )
     @unpack
     def test_cheaptest_distance(self, val1, val2, expect, expect_dist):
         g = WeightedGraph()
         g.feed_weighted(INPUT_2, True)
         # DFS
-        path, dist = g.shortest_distance_dfs(val1, val2, 'weight')
+        path, dist = g.best_path(val1, val2, 'dfs', 'weight')
         assert path == expect
         assert dist == expect_dist
 
         # BFS
-        path, dist = g.shortest_distance_bfs(val1, val2, 'weight')
+        path, dist = g.best_path(val1, val2, 'bfs', 'weight')
         assert path == expect
         assert dist == expect_dist
