@@ -1,6 +1,6 @@
 
 from tests.helper import *
-from sort.sort_array import SortArray
+from process.sort_array import SortArray
 
 INPUT_1 = [4,2,7,1,3]
 RESULT_1 = [1,2,3,4,7]
