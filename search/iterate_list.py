@@ -27,7 +27,7 @@ class IterateList:
             if i in arr2 and i not in share:
                 share.append(i)
         return share
-
+  
     @staticmethod
     def detect_first_duplicate(arr:list):
         '''
