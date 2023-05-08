@@ -1,6 +1,7 @@
 
 
 import string
+from typing import List
 
 class IterateList:
 
@@ -70,3 +71,4 @@ class IterateList:
                 alphabet[i] += 1
         missing = [k for k,v in alphabet.items() if v==0]
         return ''.join(missing)
+
