@@ -1,5 +1,5 @@
 from tests.helper import *
-from search.iterate_dict import IterateDict as c
+from basic.iterate_dict import IterateDict as c
 
 INPUT_1 =  {1:3, 5:20, 2:2}
 INPUT_2 = {"Math": 47, "Science": 65, "English": 79, "Physics": 95, "Social":90}

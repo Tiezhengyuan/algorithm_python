@@ -1,5 +1,5 @@
 from tests.helper import *
-from search.iterate_list import IterateList as c
+from basic.iterate_list import IterateList as c
 
 @ddt
 class TestIterateList(TestCase):

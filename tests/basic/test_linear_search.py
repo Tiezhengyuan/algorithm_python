@@ -1,9 +1,9 @@
 
 from tests.helper import *
-from search.linear_search import LinearSearch as c
+from basic.loops import Loops as c
 
 @ddt
-class TestArray(TestCase):
+class TestLoops(TestCase):
 
     @data(
         [[1,2,3],[1,2,3], [3,2,1]],

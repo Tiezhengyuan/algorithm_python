@@ -4,7 +4,7 @@ This is most simple and straightforward approach
 '''
 from copy import deepcopy
 
-class LinearSearch:
+class Loops:
 
     @staticmethod
     def for_loop(input:list):
