@@ -69,3 +69,50 @@ class TestList2(TestCase):
     def test_traverse_binary(self, input, start, expect):
         res = traverse_binary(input, start)
         assert len(list(res)) == expect
+
+    @data(
+        # vertical first walk
+        [3,3,(0,0), 'north_south', (1,0)],
+        [3,3,(2,0), 'north_south', (1,1)],
+        [3,3,(1,1), 'west_north', (0,2)],
+        [3,3,(0,2), 'west_north', (1,2)],
+        [3,3,(1,2), 'north_south', (2,2)],
+        [3,3,(2,2), 'north_south', None],
+        # horizontal first walk
+        [3,3,(0,0), 'west_east', (0,1)],
+        [3,3,(0,2), 'west_east', (1,1)],
+        [3,3,(1,1), 'north_west', (2,0)],
+        [3,3,(2,2), 'west_east', None],
+    )
+    @unpack
+    def test_zigzag_step(self, nrow, ncol, start, walk, expect):
+        res, _ = zigzag_step(nrow, ncol, start, walk)
+        assert res == expect
+
+    @data(
+        [INPUT_2, True, [1,4,7,5,3,6,9]],
+        [INPUT_2, False, [1,2,3,5,7,8,9]],
+    )
+    @unpack
+    def test_zigzag_walk(self, input, vertical_first, expect):
+        path = zigzag_walk(input, vertical_first)
+        res = [input[x][y] for x,y in path]
+        assert res == expect
+
+    def test_zigzag_iteration(self):
+        iter = zigzag_iteration(3,0,0,'north_south')
+        res = next(iter)
+        assert res == (1,0,'north_south')
+        res = next(iter)
+        assert res == (2,0,'north_south')
+        res = next(iter)
+        assert res == (1, 1, 'west_north')
+        res = next(iter)
+        assert res == (0, 2, 'west_north')
+        res = next(iter)
+        assert res == (1, 2, 'north_south')
+        res = next(iter)
+        assert res == (2, 2, 'north_south')
+        res = next(iter)
+        assert res == (1, 3, 'west_north')
+        

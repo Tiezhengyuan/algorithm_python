@@ -98,3 +98,80 @@ def traverse_binary(input:list, start:tuple):
                 yield next
                 input[next_row][next_col] = 1
                 yield from traverse_binary(input, next)
+
+def zigzag_walk(input:list, vertical_first:bool):
+    '''
+    matrix: 3X3
+    |  /|   _ _ _
+    | / |     /
+    |/  |,  _ _ _
+    direction: vertical first, horizontal first
+    '''
+    nrow, ncol = len(input), len(input[0])
+    start = (0, 0)
+    next, path = start, []
+    direction = 'north_south' if vertical_first is True else 'west_east'
+    while next:
+        # print('#', direction, next)
+        path.append(next)
+        next, direction = zigzag_step(nrow, ncol, next, direction)
+    return path
+
+def zigzag_step(nrow:int, ncol:int, start:tuple, walk:str):
+    '''
+    matrix should be square matrix: nrow = ncol
+    coordinator: (row, col)
+    vertical first:
+        'north_south': from north to sourth
+        'west_north': from west south to east north
+    horizontal first:
+        'west_east': from west to east
+        '
+    '''
+    # print(start, walk)
+    # vertical first
+    if walk == 'north_south':
+        if start[0]+1 < nrow:
+            return (start[0]+1, start[1]), walk
+        # the last column
+        if start[1]+1 < ncol:
+            return zigzag_step(nrow, ncol, start, 'west_north')
+    elif walk == 'west_north':
+        # print(start[0]-1, start[1]+1)
+        if start[0]-1 >= 0 and start[1]+1 < ncol:
+            return (start[0]-1, start[1]+1), walk
+        return zigzag_step(nrow, ncol, start, 'north_south')
+    # horizontal first
+    elif walk == 'west_east':
+        if start[1]+1 < ncol:
+            return (start[0], start[1]+1), walk
+        # the last row
+        if start[0]+1 < nrow:
+            return zigzag_step(nrow, ncol, start, 'north_west')
+    elif walk == 'north_west':
+        if start[0]+1 < nrow and start[1]-1 >= 0:
+            return (start[0]+1, start[1]-1), walk
+        return zigzag_step(nrow, ncol, start, 'west_east')
+    return None, None
+
+def zigzag_iteration(nrow:int, row_index, col_index, walk):
+    '''
+    specify rows only, 
+    |  /|  /|  /|
+    | / | / | / |
+    |/  |/  |/  |...
+    '''
+    if walk == 'north_south':
+        if row_index+1 < nrow:
+            yield row_index+1, col_index, walk
+            row_index += 1
+        else:
+            walk = 'west_north'
+    elif walk == 'west_north':
+        if row_index-1 >= 0:
+            yield row_index-1, col_index+1, walk
+            row_index -= 1
+            col_index += 1
+        else:
+            walk = 'north_south'
+    yield from zigzag_iteration(nrow, row_index, col_index, walk)

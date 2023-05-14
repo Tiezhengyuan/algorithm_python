@@ -71,3 +71,36 @@ def linear_hyperspace(input:list):
                 row.append(0)
         res.insert(0, row)
     return res
+
+def flat_list2_by_row(input:list):
+    '''
+    convert matrix to list 
+    '''
+    if input:
+        return input[0] + flat_list2_by_row(input[1:])
+    return []
+
+def flat_list2_by_col(input:list):
+    '''
+    convert matrix to list 
+    '''
+    if input:
+        first, remaining = [], []
+        for i in input:
+            first.append(i[0])
+            if i[1:]:
+                remaining.append(i[1:])
+        input = remaining
+        return first + flat_list2_by_col(input)
+    return []
+
+
+def insert_column(input:list, new_col:list, col_index:int):
+    '''
+    add one column to matrix
+    '''
+    res = []
+    for row, val in zip(input, new_col):
+        row.insert(col_index, val)
+        res.append(row)
+    return res

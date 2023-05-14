@@ -44,7 +44,7 @@ class TestTransform(TestCase):
         assert res == expect
 
     @data(
-        [INPUT_1, [[1,4],[2,5],[3,6]]],
+        [deepcopy(INPUT_1), [[1,4],[2,5],[3,6]]],
     )
     @unpack
     def test_transpose_list2(self, input, expect):
@@ -72,4 +72,31 @@ class TestTransform(TestCase):
     @unpack
     def test_linear_hyperspace(self, input, expect):
         res = linear_hyperspace(input)
+        assert res == expect
+
+    @data(
+        [INPUT_1, [1,2,3,4,5,6]],
+    )
+    @unpack
+    def test_flat_list2_by_row(self, input, expect):
+        res = flat_list2_by_row(input)
+        assert res == expect
+
+    @data(
+        [INPUT_1, [1,4,2,5,3,6]],
+    )
+    @unpack
+    def test_flat_list2_by_col(self, input, expect):
+        res = flat_list2_by_col(list(input))
+        assert res == expect
+
+    @data(
+        [deepcopy(INPUT_1), 3, [[1,2,3,7],[4,5,6,8]]],
+        [deepcopy(INPUT_1), 0, [[7,1,2,3],[8,4,5,6]]],
+        [deepcopy(INPUT_1), -1, [[1,2,7,3],[4,5,8,6]]],
+    )
+    @unpack
+    def test_insert_column(self, input, col_index, expect):
+        new_col = [7,8]
+        res = insert_column(input, new_col, col_index)
         assert res == expect
