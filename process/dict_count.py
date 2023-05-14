@@ -1,7 +1,5 @@
 '''
-Hash table:
-1. count occurrence
-2 
+Hash table: count occurrence
 '''
 import re
 from typing import List
