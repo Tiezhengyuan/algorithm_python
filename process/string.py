@@ -70,3 +70,48 @@ def zigzap_conversion(s:str, nrow:int):
     # sort
     path.sort(key=lambda x: (x[0], x[1]))
     return ''.join([i[2] for i in path])
+
+def fullJustify(words: List[str], maxWidth: int) -> List[str]:
+    line_words, line_words_len, res = [], 0, []
+    for word in words:
+        word_len = len(word)
+        if word_len + line_words_len <= maxWidth:
+            line_words.append(word)
+            line_words_len += word_len + 1
+        else:
+            res.append(full_justified(line_words, line_words_len, maxWidth))
+            line_words = [word,]
+            line_words_len = len(word)
+    else:
+        res.append(left_justified(line_words, maxWidth))
+    return res
+
+def full_justified(line_words, line_words_len:int, maxWidth: int):
+    space = len(line_words) - 1
+    allowed_white_space = maxWidth - line_words_len
+    # at least two words
+    if space > 0:
+        extra_space = [''] * len(line_words)
+        extra_same_space = allowed_white_space // space
+        if extra_same_space > 0:
+            extra_space[:-1] = [i + ' ' * extra_same_space for i in extra_space[:-1]]
+        extra_diff_space = allowed_white_space % space
+        if extra_diff_space > 0:
+            for i in range(extra_diff_space):
+                extra_space[i] += ' '
+        # update line_words
+        for i in range(len(line_words)):
+            line_words[i] += extra_space[i]
+    # only one word
+    else:
+        if allowed_white_space > 0:
+            line_words[0] += " " * allowed_white_space
+    return ''.join(line_words)
+
+
+def left_justified(line_words, maxWidth: int):
+    last_line = ' '.join(line_words)
+    white_space = maxWidth - len(last_line)
+    if white_space > 0:
+        last_line += ' ' * white_space
+    return last_line

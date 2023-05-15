@@ -44,3 +44,31 @@ class TestHash(TestCase):
     def test_zigzap_conversion(self, input, nrow, expect):
         res = zigzap_conversion(input, nrow)
         assert res == expect
+
+
+    @data(
+        [["What","must","be","acknowledgment","shall","be"], 16,
+            [
+                "What   must   be",
+                "acknowledgment  ",
+                "shall be        "
+            ],
+        ],
+        [["Science","is","what","we","understand","well","enough",\
+            "to","explain","to","a","computer.","Art","is",\
+            "everything","else","we","do"], 20,
+            [
+                "Science  is  what we",
+                "understand      well",
+                "enough to explain to",
+                "a  computer.  Art is",
+                "everything  else  we",
+                "do                  "
+            ],
+        ],
+    )
+    @unpack
+    def test_(self, input, max_len, expect):
+        res = fullJustify(input, max_len)
+        print(res)
+        # assert res == expect
