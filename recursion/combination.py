@@ -2,6 +2,7 @@
 combinat problems
 '''
 from copy import deepcopy
+from typing import List
 
 def stair_2steps(n:int, path:list, output:list):
      '''
@@ -35,7 +36,22 @@ def stair_3steps(n:int, path:list, output:list):
           stair_3steps(n-2, deepcopy(path), output) + \
           stair_3steps(n-3, deepcopy(path), output)
 
-def anagram_char(input:str, output:list):
+def anagram_char(input:str, output:str):
      '''
      all anagrams of a given string
      '''
+     if len(input) == 0:
+          yield output
+     for i in range(0, len(input)):
+          new_input = deepcopy(input)
+          new_input.remove(i)
+          yield from anagram_char(new_input, output + input[i])
+
+
+def threeSum(nums: List[int]) -> List[List[int]]:
+    '''
+    Given an integer array nums, return all the triplets 
+    [nums[i], nums[j], nums[k]] such that i != j, i != k, 
+    and j != k, and nums[i] + nums[j] + nums[k] == 0.
+    Notice that the solution set must not contain duplicate triplets.
+    '''
