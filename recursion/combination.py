@@ -39,19 +39,68 @@ def stair_3steps(n:int, path:list, output:list):
 def anagram_char(input:str, output:str):
      '''
      all anagrams of a given string
+     n! = n*(n-1)...*1 = 
+     Note: order of characters matter
      '''
      if len(input) == 0:
           yield output
      for i in range(0, len(input)):
-          new_input = deepcopy(input)
-          new_input.remove(i)
-          yield from anagram_char(new_input, output + input[i])
+          yield from anagram_char(input[:i] + input[i+1:], \
+               output + input[i])
 
+def select_anagram_char(input:str, output:str, str_len:int):
+     '''
+     all anagrams of a given string
+     n!/(n-m)! 
+     Note: order of characters matter
+     '''
+     if len(output) == str_len:
+          yield output
+     for i in range(0, len(input)):
+          yield from select_anagram_char(input[:i] + input[i+1:], \
+               output + input[i], str_len)
 
+def all_anagrams(input:str, output:str):
+     '''
+     all possible anagram words
+     '''
+     for i in range(1, len(input)+1):
+          yield from select_anagram_char(input, output, i)
+
+def combination_char(input:str, output:str, str_len:int):
+     '''
+     order doesn't matter
+     n!/((n-m)!*m!)
+     '''
+     if len(output) == str_len:
+          yield output
+     for i in range(len(input)):
+          yield from combination_char(input[i+1:], \
+               output + input[i], str_len)
+
+def combination_el(input:list, output:list, out_len:int):
+     '''
+     order doesn't matter
+     n!/((n-m)!*m!)
+     '''
+     if len(output) == out_len:
+          yield output
+     for i in range(len(input)):
+          yield from combination_el(input[i+1:], \
+               deepcopy(output) + [input[i],], out_len)
+          
 def threeSum(nums: List[int]) -> List[List[int]]:
-    '''
-    Given an integer array nums, return all the triplets 
-    [nums[i], nums[j], nums[k]] such that i != j, i != k, 
-    and j != k, and nums[i] + nums[j] + nums[k] == 0.
-    Notice that the solution set must not contain duplicate triplets.
-    '''
+     '''
+     Given an integer array nums, return all the triplets 
+     [nums[i], nums[j], nums[k]] such that i != j, i != k, 
+     and j != k, and nums[i] + nums[j] + nums[k] == 0.
+     Notice that the solution set must not contain duplicate triplets.
+     '''
+     res = []
+     for comb in combination_el(nums, [], 3):
+          if sum(comb) == 0:
+               comb.sort()
+               if comb not in res:
+                    res.append(comb)
+     return res
+
